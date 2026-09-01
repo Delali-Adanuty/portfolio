@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   <title>{{ title }} - Van-Dyck Adanuty</title>
   
   <!-- Font -->
@@ -105,6 +106,8 @@ footer {
   <script defer src="https://cdn.jsdelivr.net/npm/katex/dist/contrib/auto-render.min.js" 
           onload="renderMathInElement(document.body, { delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}] });"></script>
 </head>
+
+
 <body>
 <nav>
     <a href="/" class="logo">Van-Dyck</a>
@@ -122,5 +125,18 @@ footer {
   <footer>
     &copy; 2026 Van-Dyck Adanuty. 
   </footer>
+
+
+    <script>
+    if (window.netlifyIdentity) {
+        window.netlifyIdentity.on("init", user => {
+        if (!user) {
+            window.netlifyIdentity.on("login", () => {
+            document.location.href = "/admin/";
+            });
+        }
+        });
+    }
+    </script>
 </body>
 </html>
