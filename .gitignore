@@ -1,0 +1,11 @@
+# Node dependencies
+node_modules/
+
+# Eleventy build output
+_site/
+
+# macOS system files
+.DS_Store
+
+# Local environment variables
+.env

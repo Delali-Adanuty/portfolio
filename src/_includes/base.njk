@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ title }} - Van-Dyck Adanuty</title>
+  
+  <!-- Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+    /* Color Variables for Auto Dark/Light Mode */
+:root {
+      --bg-color: #ffffff;
+      --text-main: #222222;
+      --text-muted: #555555;
+      --text-light: #888888;
+      --link-color: #0056b3;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg-color: #121212;
+        --text-main: #e4e4e4;
+        --text-muted: #a0a0a0;
+        --text-light: #777777;
+        --link-color: #66b2ff;
+      }
+
+    /* Clean, modern, yet minimal styling */
+    body { 
+      font-family: 'DM Sans', sans-serif; 
+      font-weight: 300;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      max-width: 800px; 
+      margin: 40px auto; 
+      padding: 0 20px; 
+      line-height: 1.7; 
+      display: flex;
+      flex-direction: column;
+      min-height: 90vh;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    
+    h1, h2, h3, h4 { font-weight: 600; margin-top: 1.5em; margin-bottom: 0.5em; }
+    h1 { font-size: 2.2rem; }
+    
+    a { color: var(--link-color); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    
+    /* Navigation */
+    nav { 
+      margin-bottom: 60px; /* Increased to give breathing room for the banner */
+      display: flex;
+      justify-content: space-between; 
+      align-items: center;
+      font-weight: 400;
+      padding-top: 20px;
+    }
+    
+    .logo {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+    
+    .logo:hover {
+      text-decoration: none; 
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 20px;
+    }
+    
+    main { flex: 1; }
+
+footer {
+      margin-top: 60px;
+      padding-top: 20px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      text-align: center;
+    }
+
+    /* Project listing styles */
+    .project-header { 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: baseline; 
+      padding-bottom: 5px; 
+      margin-bottom: 10px;
+    }
+    
+    .project-header h3 { margin: 0; }
+    .tech-stack { font-size: 0.9em; color: var(--text-muted); font-style: italic; }
+  </style>
+
+  <!-- KaTeX for DSP/Math formulas -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex/dist/contrib/auto-render.min.js" 
+          onload="renderMathInElement(document.body, { delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}] });"></script>
+</head>
+<body>
+<nav>
+    <a href="/" class="logo">Van-Dyck</a>
+    <div class="nav-links">
+      <a href="/about/">About Me</a>
+      <a href="/projects/">Projects</a>
+      <a href="/posts/">Posts</a>
+    </div>
+  </nav>
+
+  <main>
+    {{ content | safe }} 
+  </main>
+
+  <footer>
+    &copy; 2026 Van-Dyck Adanuty. 
+  </footer>
+</body>
+</html>

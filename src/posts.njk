@@ -1,0 +1,34 @@
+---
+layout: base.njk
+title: All Posts
+---
+<div style="margin-bottom: 40px;">
+  <h1 style="margin-bottom: 10px;">Project Updates</h1>
+  <p style="color: var(--text-muted); font-size: 1.1rem; margin-top: 0;">
+    Thoughts, progress, and technical notes.
+  </p>
+</div>
+
+<ul style="list-style-type: none; padding: 0;">
+{% for post in collections.posts | reverse %}
+  <li style="margin-bottom: 45px;">
+    <!-- Date -->
+    <span style="color: var(--text-light); font-size: 0.9em; display: block; margin-bottom: 2px;">
+      {{ post.date.toDateString() }}
+    </span>
+    
+    <!-- Title -->
+    <a href="{{ post.url }}" style="font-size: 1.3rem; font-weight: 600; display: block; margin-bottom: 8px;">
+      {{ post.data.title }}
+    </a>
+    
+    <!-- Excerpt / Snippet -->
+    <p style="color: var(--text-muted); line-height: 1.6; margin-top: 0; margin-bottom: 12px;">
+      {{ post.content | striptags | truncate(500) }}
+    </p>
+    
+    <!-- Read More Link -->
+    <a href="{{ post.url }}" style="font-size: 0.95rem; font-weight: 600;">Read more &rarr;</a>
+  </li>
+{% endfor %}
+</ul>

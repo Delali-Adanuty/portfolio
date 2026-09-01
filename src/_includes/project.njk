@@ -1,0 +1,28 @@
+---
+layout: base.njk
+---
+<div style="margin-bottom: 40px;">
+  <h1 style="margin-bottom: 5px;">{{ title }}</h1>
+  
+  <div style="display: flex; gap: 15px; align-items: center; font-size: 0.95rem; margin-bottom: 20px;">
+    {% if tech %}
+      <span style="color: var(--text-muted); font-style: italic;">{{ tech }}</span>
+    {% endif %}
+    
+    {% if github %}
+      <span style="color: var(--text-light);">|</span>
+      <a href="{{ github }}" target="_blank" style="font-weight: 600;">View on GitHub &rarr;</a>
+    {% endif %}
+  </div>
+
+  <!-- Large intro text for the write-up -->
+  <p style="font-size: 1.15rem; line-height: 1.6; color: var(--text-muted);">
+    {% if description %}
+      {{ description }}
+    {% else %}
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem. Aliquam erat volutpat. Donec placerat nisl magna.
+    {% endif %}
+  </p>
+</div>
+
+{{ content | safe }}

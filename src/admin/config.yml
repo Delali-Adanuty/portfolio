@@ -1,0 +1,34 @@
+backend:
+  # Using Netlify's Git Gateway is the easiest way to authenticate
+  name: git-gateway
+  branch: main
+local_backend: true
+
+media_folder: "src/images"
+public_folder: "/images"
+
+collections:
+  - name: "posts"
+    label: "Project Updates"
+    folder: "src/posts"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - {label: "Layout", name: "layout", widget: "hidden", default: "post.njk"}
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Date", name: "date", widget: "datetime"}
+      - {label: "Body", name: "body", widget: "markdown"}
+
+  - name: "projects"
+    label: "Portfolio Projects"
+    folder: "src/projects"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Layout", name: "layout", widget: "hidden", default: "project.njk"}
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Short Description", name: "description", widget: "text", required: false} # Added this line
+      - {label: "Tech Stack", name: "tech", widget: "string", required: false}
+      - {label: "GitHub Link", name: "github", widget: "string", required: false}
+      - {label: "Date", name: "date", widget: "datetime"}
+      - {label: "Body", name: "body", widget: "markdown"}

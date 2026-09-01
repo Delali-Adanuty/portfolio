@@ -1,0 +1,38 @@
+---
+layout: base.njk
+title: Projects
+---
+<h1>Projects</h1>
+<p style="color: var(--text-muted); margin-bottom: 40px;">Deep dives into my DSP, C++, and audio programming work.</p>
+
+<ul style="list-style-type: none; padding: 0;">
+{% for project in collections.projects | reverse %}
+  <li style="margin-bottom: 50px;">
+    
+    <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 5px;">
+      <a href="{{ project.url }}" style="font-size: 1.4rem; font-weight: 600;">{{ project.data.title }}</a>
+      
+      {% if project.data.github %}
+        <a href="{{ project.data.github }}" target="_blank" style="font-size: 0.9rem;">GitHub</a>
+      {% endif %}
+    </div>
+    
+    {% if project.data.tech %}
+      <div style="font-size: 0.9em; color: var(--text-muted); font-style: italic; margin-bottom: 15px;">
+        {{ project.data.tech }}
+      </div>
+    {% endif %}
+
+    <!-- This is the block that must be present -->
+    <p style="line-height: 1.6; margin-bottom: 15px;">
+      {% if project.data.description %}
+        {{ project.data.description }}
+      {% else %}
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem. Aliquam erat volutpat. Donec placerat nisl magna.
+      {% endif %}
+    </p>
+    
+    <a href="{{ project.url }}" style="font-size: 0.95rem; font-weight: 600;">Read Details &rarr;</a>
+  </li>
+{% endfor %}
+</ul>

@@ -1,0 +1,38 @@
+---
+layout: base.njk
+title: Home
+---
+<div style="margin-bottom: 60px;">
+  <h1 style="font-size: 2.8rem; margin-bottom: 10px; margin-top: 0;">Hello, I'm Van-Dyck.</h1>
+  <p style="font-size: 1.25rem; color: var(--text-muted); line-height: 1.6; margin-top: 0; max-width: 650px;">
+    I'm a Computer Engineering student specializing in audio programming, digital signal processing, and C++. Welcome to my digital workspace.
+  </p>
+</div>
+
+<h2 style="font-size: 1.4rem; padding-bottom: 10px; margin-bottom: 30px;">
+  Latest Updates
+</h2>
+
+<ul style="list-style-type: none; padding: 0;">
+{% for post in collections.posts | reverse %}
+  <li style="margin-bottom: 45px;">
+    <!-- Date -->
+    <span style="color: var(--text-light); font-size: 0.9em; display: block; margin-bottom: 2px;">
+      {{ post.date.toDateString() }}
+    </span>
+    
+    <!-- Title -->
+    <a href="{{ post.url }}" style="font-size: 1.3rem; font-weight: 600; display: block; margin-bottom: 8px;">
+      {{ post.data.title }}
+    </a>
+    
+    <!-- Excerpt / Snippet -->
+    <p style="color: var(--text-muted); line-height: 1.6; margin-top: 0; margin-bottom: 12px;">
+      {{ post.content | striptags | truncate(500) }}
+    </p>
+    
+    <!-- Read More Link -->
+    <a href="{{ post.url }}" style="font-size: 0.95rem; font-weight: 600;">Read more &rarr;</a>
+  </li>
+{% endfor %}
+</ul>
