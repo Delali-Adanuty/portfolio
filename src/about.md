@@ -1,6 +1,13 @@
 ---
 layout: base.njk
 title: About
+contacts:
+  - name: Email
+    url: mailto:delalivandyck@gmail.com
+  - name: Github
+    url: https://github.com/Delali-Adanuty
+  - name: LinkedIn
+    url: https://www.linkedin.com/in/van-dyck-adanuty-6a8475287/
 ---
 # About Me
 
@@ -13,5 +20,10 @@ I knew I wanted to be an engineer but I didn't really know why or what kind. I a
 
 You can check out my projects to find out the cool stuff I'm working on. 
 
-Please feel free to contact me
+Please feel free to contact me\
+\
+-[ Email](mailto:delalivandyck@gmail.com)
 
+\- [Linkedin](https://www.linkedin.com/in/van-dyck-adanuty-6a8475287/)
+
+\- [Github](https://github.com/Delali-Adanuty)
