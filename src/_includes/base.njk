@@ -21,6 +21,12 @@
       --link-color: #0056b3;
     }
 
+    @media (max-width: 600px) {
+      h1 { font-size: 2rem !important; }
+      h2 { font-size: 1.3rem !important; }
+      .project-header, nav { flex-direction: column; align-items: flex-start; gap: 10px; }
+    }    
+
     @media (prefers-color-scheme: dark) {
       :root {
         --bg-color: #121212;
@@ -108,7 +114,7 @@ footer {
 </head>
 
 
-<body>
+<body style="max-width: 800px; width: 90%; margin: 0 auto; padding: 20px 0;">
 <nav>
     <a href="/" class="logo">Van-Dyck</a>
     <div class="nav-links">
