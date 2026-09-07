@@ -1,13 +1,7 @@
 ---
 layout: base.njk
 title: About
-contacts:
-  - name: Email
-    url: mailto:delalivandyck@gmail.com
-  - name: Github
-    url: https://github.com/Delali-Adanuty
-  - name: LinkedIn
-    url: https://www.linkedin.com/in/van-dyck-adanuty-6a8475287/
+contacts: []
 ---
 # About Me
 
