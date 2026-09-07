@@ -32,3 +32,21 @@ collections:
       - {label: "GitHub Link", name: "github", widget: "string", required: false}
       - {label: "Date", name: "date", widget: "datetime"}
       - {label: "Body", name: "body", widget: "markdown"}
+
+  - name: "pages"
+    label: "Single Pages"
+    files:
+      - file: "src/about.md"
+        label: "About Page"
+        name: "about"
+        fields:
+          - {label: "Layout", name: "layout", widget: "hidden", default: "about.njk"}
+          - {label: "Title", name: "title", widget: "string"}
+          - {label: "Body", name: "body", widget: "markdown"}
+          - label: "Contact Links"
+            name: "contacts"
+            widget: "list"
+            required: false
+            fields:
+              - {label: "Platform Name", name: "name", widget: "string", hint: "e.g., Email, LinkedIn, GitHub"}
+              - {label: "URL", name: "url", widget: "string", hint: "e.g., mailto:delalivandyck@gmail.com"}

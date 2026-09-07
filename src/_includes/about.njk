@@ -1,0 +1,19 @@
+---
+layout: base.njk
+---
+<div style="line-height: 1.6; font-size: 1.1rem; margin-bottom: 40px;">
+  {{ content | safe }}
+</div>
+
+{% if contacts %}
+  <h2 style="font-size: 1.4rem; padding-top: 20px; margin-top: 40px;">
+    Contact
+  </h2>
+  <ul style="list-style-type: none; padding: 0;">
+    {% for item in contacts %}
+      <li style="margin-bottom: 12px;">
+        <a href="{{ item.url }}" target="_blank" style="font-size: 1.1rem; font-weight: 600;">{{ item.name }} &rarr;</a>
+      </li>
+    {% endfor %}
+  </ul>
+{% endif %}

@@ -4,13 +4,14 @@ title: About
 ---
 # About Me
 
-I am Van-Dyck Adanuty. I am a Computer Engineering student at Michigan State University. I will graduate in May 2027.
+I am Van-Dyck Adanuty. I am a Computer Engineering student at Michigan State University graduating in May 2027.
 
+I'm currently a member of the MSU Audio Engineering and Enthusiasts Club. We have mostly been working on passion projects(a teesny synth, and an audio interface) and that's where most of the learning takes place.
 
-I started with drums. As I learned more about drums, I noticed that the equipment around the drum kit changed the sound, not only the drums themselves. I saw that other musicians also used interesting equipment that dictated their sound. I came to realize that most of this was signal processing of some sort after a couple engineering classes. This honed my interest in building audio software.
+I have been playing drums for a while now and something I noticed early on was how the "tech" around the kit or the "processing" affected the final sound. Even more intriguing was the numerous plugin boards I'd see guitarists using or the synth packs the keyboardists used. But it stayed general curiosity for a long time.
+I knew I wanted to be an engineer but I didn't really know why or what kind. I also knew I liked writing code. My engineering classes that touched on topics that had even the remote applications in audio made me realize this is what I wanted to do in the long run.
 
-This interest created every project on this website. I built a distortion plugin. This plugin controls aliasing. I built a noise reducer. This noise reducer tracks room noise instead of using a simple noise gate. I built a room correction pipeline. This pipeline measures a room and calculates the exact inverse filter for that room.
+You can check out my projects to find out the cool stuff I'm working on. 
 
-I’m currently with the MSU Audio Enthusiasts and Engineering Club. We have mostly been working on passion projects and that’s where most of the learning takes place. 
+Please feel free to contact me
 
-Feel free to contact me [here](mailto:delalivandyck@gmail.com).
