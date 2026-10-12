@@ -1,0 +1,84 @@
+---
+layout: post.njk
+title: Guitar input circuit design
+date: 2026-10-11T23:22:00.000-04:00
+---
+# High-Impedance (Hi-Z) Instrument Input Design for the PCM1802 ADC
+
+An electric guitar pickup cannot connect directly to an Analog-to-Digital Converter (ADC). This article explains the two main signal problems in guitar interfaces and shows how a custom analog front-end circuit solves them.
+
+---
+
+## 1. Signal Problems
+
+When you connect a guitar directly to an ADC, two problems occur:
+
+### Problem 1: High Output Impedance (Hi-Z)
+A guitar pickup produces a high voltage, but it cannot supply much electric current[cite: 1]. The internal impedance of a guitar pickup is approximately 15 kΩ[cite: 1]. 
+
+* **Voltage Loss:** If you connect a high-impedance (Hi-Z) guitar signal to a low-impedance (Low-Z) ADC input, the source impedance and the input impedance form a voltage divider[cite: 1]. Because the source impedance is high, the pickup loses more than half of its signal voltage across its own internal resistance[cite: 1].
+* **High-Frequency Loss:** A guitar pickup is a wire coil that acts as an inductor[cite: 1]. When this inductor connects to a low-impedance input, the circuit forms a Low-Pass Filter (LPF)[cite: 1]. This filter removes middle and treble frequencies from the audio signal[cite: 1].
+
+### Problem 2: 0V Center Voltage
+A guitar outputs an Alternating Current (AC) signal centered at 0 V. A single-supply operational amplifier (op-amp) and ADC cannot read negative voltage swings below 0 V. If the signal is not shifted to a positive Direct Current (DC) reference voltage, the negative half of the audio waveform clips.
+
+---
+
+## 2. Design Solutions and Buffer Comparison
+
+To capture the full guitar signal without tone loss or clipping, the input circuit must do two things:
+1. **Increase the input impedance to approximately 1 MΩ**[cite: 1]. Compared to the 15 kΩ pickup impedance, a 1 MΩ input impedance brings the voltage divider ratio close to 1[cite: 1]. A voltage follower buffer then lowers the output impedance so the signal can safely drive the ADC.
+2. **Shift the center voltage to 2.5 V**. A resistor voltage divider and a coupling capacitor offset the 0 V guitar signal to a 2.5 V DC reference[cite: 2].
+
+### Buffer Architecture Comparison
+
+You can build an impedance buffer with an operational amplifier (op-amp) or a discrete Field-Effect Transistor (FET)[cite: 1].
+
+| Feature | Op-Amp Buffer (Voltage Follower) | Discrete FET Buffer (Source Follower) |
+| :--- | :--- | :--- |
+| **Circuit Component** | Integrated circuit op-amp[cite: 1] | JFET or MOSFET transistor[cite: 1] |
+| **Distortion & Tone** | Very low Total Harmonic Distortion (THD); flat frequency response[cite: 1] | Produces even-order harmonic distortion that adds color to the sound[cite: 1] |
+| **Clipping Behavior** | Harsh clipping at the supply rails[cite: 1] | Soft clipping[cite: 1] |
+| **Output & Gain** | Very low output impedance; unity voltage gain (1:1)[cite: 1, 2] | Voltage gain loss; inconsistent performance across different transistor parts[cite: 1] |
+| **Power Requirements** | Traditional designs require dual power rails (+15 V and -15 V) unless biased for a single supply[cite: 1, 2] | Low power consumption[cite: 1] |
+
+For a clean digital audio interface, we use the **MCP6022 op-amp** configured as a single-supply voltage follower[cite: 2]. It provides a flat frequency response and drives the **PCM1802 ADC** accurately[cite: 1, 2].
+
+---
+
+## 3. Circuit Stage Breakdown
+
+The complete analog front-end circuit processes the signal from the TRS input jack (`J1`) to the left input pin (`VINL`) of the PCM1802 ADC[cite: 2].
+
+### Stage 1: Anti-Pop Resistor and Input Impedance
+* **Components:** 10 MΩ resistor connected in parallel from the TRS tip (`J1`) to analog ground (`AGND`)[cite: 2].
+* **Function:** At audio frequencies, the 1 kΩ resistor and the 100 nF film capacitor act as a short circuit[cite: 2]. The 10 MΩ resistor sits in parallel with the 1 MΩ bias resistor (10 MΩ || 1 MΩ)[cite: 2]. This combination keeps the total input impedance near 1 MΩ, which prevents pickup loading and preserves the pickup resonance[cite: 1, 2].
+* **Static Discharge:** When no cable is plugged into the jack, static electricity can build up on the left side of the 100 nF capacitor[cite: 2]. The 10 MΩ resistor drains this static charge to ground and stops loud popping noises when you plug in a guitar[cite: 2].
+
+### Stage 2: Radio Frequency (RF) Low-Pass Filter
+* **Components:** 1 kΩ series resistor and 220 pF capacitor to ground[cite: 2].
+* **Function:** Because a guitar pickup is a wire coil, it acts as an antenna and picks up Radio Frequency (RF) interference[cite: 2]. The 1 kΩ resistor and 220 pF capacitor form a passive Low-Pass Filter (LPF)[cite: 2].
+* **Cutoff Frequency:**
+  `fc = 1 / (2 * π * R * C) = 1 / (2 * π * 1 kΩ * 220 pF) ≈ 720 kHz`[cite: 2]
+  Human hearing ranges from 20 Hz to 20 kHz[cite: 2]. A 720 kHz cutoff blocks high-frequency RF noise before it reaches the op-amp, while leaving the audible guitar signal untouched[cite: 2].
+
+### Stage 3: AC Coupling and 2.5V DC Biasing
+* **Components:** 100 nF film capacitor, 1 MΩ resistor, two 100 kΩ resistors, and a 10 µF capacitor[cite: 2].
+* **DC Blocking and High-Pass Filter:** The 100 nF film capacitor blocks DC voltage and passes only the AC guitar signal[cite: 2]. This stops the 2.5 V internal bias voltage from flowing backward into the guitar[cite: 2]. Together with the 1 MΩ resistor, the 100 nF capacitor forms a High-Pass Filter (HPF)[cite: 2]:
+  `fc = 1 / (2 * π * R * C) = 1 / (2 * π * 1 MΩ * 100 nF) ≈ 1.59 Hz`[cite: 2]
+  This filter blocks 0 Hz DC signals on both sides of the capacitor[cite: 2].
+* **Reference Voltage (`VREF`) Generation:** Two 100 kΩ resistors divide the `+5V_A` analog supply in half to create a 2.5 V reference (`VREF`)[cite: 2]. The 100 nF capacitor holds this 2.5 V offset across its plates, which shifts the center of the guitar signal from 0 V to 2.5 V[cite: 2].
+* **Power Supply Noise Filtering:** A 10 µF capacitor connects from the `VREF` node to ground[cite: 2]. Combined with the parallel impedance of the two 100 kΩ divider resistors (50 kΩ equivalent), it creates a Low-Pass Filter[cite: 2]:
+  `fc = 1 / (2 * π * Req * C) = 1 / (2 * π * 50 kΩ * 10 µF) ≈ 0.32 Hz`[cite: 2]
+  This filter acts as an AC ground[cite: 2]. It shunts AC power supply noise to ground and passes a clean 2.5 V DC voltage through the 1 MΩ resistor to the non-inverting (`+`) input of the op-amp[cite: 2].
+
+### Stage 4: Active Impedance Buffer
+* **Component:** MCP6022 operational amplifier (`U1A`)[cite: 2].
+* **Function:** The op-amp connects in a voltage follower configuration, where the output loops directly back to the inverting (`-`) input[cite: 2]. The op-amp keeps the output voltage equal to the input voltage (preserving all guitar voltage changes), but converts the high input impedance into a very low output impedance[cite: 2]. This low impedance safely drives the ADC input stage.
+
+### Stage 5: Output DC Block and Anti-Aliasing Filter
+* **Components:** 10 µF Non-Polarized (NP) capacitor, 100 Ω resistor, and 1 nF capacitor[cite: 2].
+* **Output DC Blocking:** The 10 µF non-polarized capacitor sits between the op-amp output and the ADC input[cite: 2, 3]. It blocks the 2.5 V DC bias voltage from the op-amp so the PCM1802 ADC can center the signal around its own internal reference without a DC offset[cite: 2, 3].
+* **ADC Input Filter:** The 100 Ω resistor and 1 nF capacitor form a final Low-Pass Filter at the `VINL` pin of the PCM1802[cite: 2, 3]:
+  `fc = 1 / (2 * π * R * C) = 1 / (2 * π * 100 Ω * 1 nF) ≈ 1.6 MHz`[cite: 3]
+  The PCM1802 uses an internal oversampling rate of 2.8 MHz and applies a digital filter to remove frequencies above 20 kHz[cite: 3]. This 1.6 MHz hardware LPF removes high-frequency noise above 1.6 MHz before the ADC samples the signal[cite: 3].
