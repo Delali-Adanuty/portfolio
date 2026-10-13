@@ -128,10 +128,3 @@ An electric guitar pickup cannot connect directly to an Analog-to-Digital Conver
 
   The PCM1802 uses an internal oversampling rate of 2.8 MHz and applies a digital filter to remove frequencies above 20 kHz. This 1.6 MHz hardware LPF removes high-frequency noise above 1.6 MHz before the ADC samples the signal.
 
-When you connect a guitar directly to an ADC, two problems occur:
-A guitar pickup produces a high voltage, but it cannot supply much electric current. The internal impedance of a guitar pickup is approximately 15 kΩ.
-A guitar outputs an Alternating Current (AC) signal centered at 0 V. A single-supply operational amplifier (op-amp) and ADC cannot read negative voltage swings below 0 V. If the signal is not shifted to a positive Direct Current (DC) reference voltage, the negative half of the audio waveform clips.
-To capture the full guitar signal without tone loss or clipping, the input circuit must do two things:
-You can build an impedance buffer with an operational amplifier (op-amp) or a discrete Field-Effect Transistor (FET).
-**FeatureOp-Amp Buffer (Voltage Follower)Discrete FET Buffer (Source Follower)**Circuit ComponentIntegrated circuit op-ampJFET or MOSFET transistorDistortion & ToneVery low Total Harmonic Distortion (THD); flat frequency responseProduces even-order harmonic distortion that adds color to the soundClipping BehaviorHarsh clipping at the supply railsSoft clippingOutput & GainVery low output impedance; unity voltage gain (1:1)Voltage gain loss; inconsistent performance across different transistor partsPower RequirementsTraditional designs require dual power rails (+15 V and -15 V) unless biased for a single supplyLow power consumptionFor a clean digital audio interface, we use the MCP6022 op-amp configured as a single-supply voltage follower. It provides a flat frequency response and drives the PCM1802 ADC accurately.
-The complete analog front-end circuit processes the signal from the TRS input jack (`J1`) to the left input pin (`VINL`) of the PCM1802 ADC.
